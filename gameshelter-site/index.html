@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Game Shelter</title>
+  <meta name="description" content="Game Shelter is an independent game studio creating cozy casual games, emotional stories, and relaxing puzzle experiences." />
+
+  <style>
+    :root {
+      --bg: #0b0f1d;
+      --bg-soft: #141a2e;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #ffffff;
+      --text-muted: #b9bfd6;
+      --accent: #a78bfa;
+      --accent-soft: rgba(167, 139, 250, 0.16);
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.22), transparent 34%),
+        radial-gradient(circle at 90% 20%, rgba(80, 120, 255, 0.14), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 15, 29, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      min-height: 84vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 96px 24px 72px;
+    }
+
+    .hero-inner {
+      max-width: 880px;
+      text-align: center;
+    }
+
+    .hero-logo {
+      width: min(360px, 82vw);
+      height: auto;
+      display: block;
+      margin: 0 auto 40px;
+      filter: drop-shadow(0 24px 60px rgba(167, 139, 250, 0.26));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 8px 14px;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #d9ceff;
+      font-size: 14px;
+      letter-spacing: 0.4px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 1.02;
+      letter-spacing: -2px;
+    }
+
+    .hero-text {
+      max-width: 700px;
+      margin: 24px auto 0;
+      color: var(--text-muted);
+      font-size: clamp(18px, 2.2vw, 22px);
+    }
+
+    .hero-actions {
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.16s ease, background 0.16s ease, border 0.16s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      background: var(--accent);
+      color: #120d24;
+    }
+
+    .button-secondary {
+      border-color: var(--card-border);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    section {
+      padding: 84px 24px;
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    .section-text {
+      max-width: 760px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .cards {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 180px;
+      padding: 28px;
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      background: var(--card);
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    .games-grid {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .game-card {
+      padding: 32px;
+      border: 1px solid var(--card-border);
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(167, 139, 250, 0.16), rgba(255, 255, 255, 0.04)),
+        var(--card);
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .game-card h3 {
+      margin: 0 0 10px;
+      font-size: 30px;
+    }
+
+    .game-meta {
+      margin: 0 0 18px;
+      color: #d9ceff;
+      font-weight: 700;
+    }
+
+    .game-description {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 17px;
+    }
+
+    .status-badge {
+      justify-self: end;
+      display: inline-flex;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .contact-box {
+      margin-top: 32px;
+      padding: 32px;
+      border: 1px solid var(--card-border);
+      border-radius: 32px;
+      background: var(--card);
+    }
+
+    .contact-box p {
+      margin: 0 0 16px;
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .contact-email {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .site-footer {
+      padding: 34px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 760px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 14px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 72px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .game-card {
+        grid-template-columns: 1fr;
+      }
+
+      .status-badge {
+        justify-self: start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#start" aria-label="Game Shelter home">
+        <img class="brand-logo" src="logo.png" alt="Game Shelter logo" />
+        <span>Game Shelter</span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#games">Games</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="start">
+      <div class="hero-inner">
+        <img class="hero-logo" src="logo.png" alt="Game Shelter logo" />
+
+        <div class="eyebrow">Independent Game Studio</div>
+
+        <h1>Cozy games. Beautiful stories.</h1>
+
+        <p class="hero-text">
+          Game Shelter creates warm, emotional casual games with relaxing puzzles,
+          charming characters, and beautiful worlds to discover.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#games">Our Games</a>
+          <a class="button button-secondary" href="#contact">Contact Us</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-inner">
+        <h2 class="section-title">About Game Shelter</h2>
+
+        <p class="section-text">
+          We are a small independent game studio focused on accessible casual games,
+          emotional storytelling, cozy visual worlds, and polished player experience.
+        </p>
+
+        <div class="cards">
+          <article class="card">
+            <h3>Emotional</h3>
+            <p>
+              We build games around stories, characters, memories, and small moments
+              that feel meaningful.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Cozy</h3>
+            <p>
+              Our worlds are warm, readable, and inviting — places where players want
+              to spend time.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Accessible</h3>
+            <p>
+              We create simple, relaxing gameplay that is easy to understand and
+              satisfying to return to.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="games">
+      <div class="section-inner">
+        <h2 class="section-title">Games</h2>
+
+        <p class="section-text">
+          Our first projects are currently in development. More details will be
+          available soon.
+        </p>
+
+        <div class="games-grid">
+          <article class="game-card">
+            <div>
+              <h3>Emma’s Stories</h3>
+              <p class="game-meta">Spot-the-difference story puzzle</p>
+              <p class="game-description">
+                A relaxing visual puzzle game about emotions, choices, memories,
+                and discovering meaningful details in beautiful scenes.
+              </p>
+            </div>
+
+            <div class="status-badge">In development</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-inner">
+        <h2 class="section-title">Contact</h2>
+
+        <p class="section-text">
+          For business inquiries, partnerships, publishing opportunities, or general questions,
+          please contact us by email.
+        </p>
+
+        <div class="contact-box">
+          <p>Email</p>
+          <a class="contact-email" href="mailto:hello@gameshelter.games">
+            hello@gameshelter.games
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>© 2026 Game Shelter. All rights reserved.</div>
+
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-of-use.html">Terms of Use</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

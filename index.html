@@ -5,17 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Game Shelter</title>
-  <meta name="description" content="Game Shelter is an independent game studio creating cozy casual games, emotional stories, and relaxing puzzle experiences." />
+  <meta
+    name="description"
+    content="Game Shelter is an independent game studio creating cozy casual games, emotional stories, and relaxing puzzle experiences."
+  />
 
   <style>
     :root {
       --bg: #0b0f1d;
-      --bg-soft: #141a2e;
       --card: rgba(255, 255, 255, 0.06);
       --card-border: rgba(255, 255, 255, 0.12);
       --text: #ffffff;
       --text-muted: #b9bfd6;
       --accent: #a78bfa;
+      --accent-2: #7dd3fc;
       --accent-soft: rgba(167, 139, 250, 0.16);
       --max-width: 1120px;
     }
@@ -30,13 +33,15 @@
 
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(167, 139, 250, 0.22), transparent 34%),
-        radial-gradient(circle at 90% 20%, rgba(80, 120, 255, 0.14), transparent 30%),
-        var(--bg);
       color: var(--text);
       font-family: Arial, Helvetica, sans-serif;
       line-height: 1.6;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(167, 139, 250, 0.18), transparent 28%),
+        radial-gradient(circle at 80% 20%, rgba(125, 211, 252, 0.10), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(167, 139, 250, 0.10), transparent 30%),
+        var(--bg);
+      overflow-x: hidden;
     }
 
     a {
@@ -44,12 +49,58 @@
       text-decoration: none;
     }
 
+    .bg-orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(70px);
+      opacity: 0.32;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatOrb 14s ease-in-out infinite;
+    }
+
+    .orb-1 {
+      width: 260px;
+      height: 260px;
+      background: rgba(167, 139, 250, 0.28);
+      top: 120px;
+      left: -40px;
+    }
+
+    .orb-2 {
+      width: 240px;
+      height: 240px;
+      background: rgba(125, 211, 252, 0.18);
+      top: 420px;
+      right: -60px;
+      animation-delay: -4s;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: rgba(167, 139, 250, 0.16);
+      bottom: 80px;
+      left: 35%;
+      animation-delay: -8s;
+    }
+
+    @keyframes floatOrb {
+      0%, 100% {
+        transform: translateY(0) translateX(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-24px) translateX(16px) scale(1.06);
+      }
+    }
+
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 10;
-      backdrop-filter: blur(14px);
-      background: rgba(11, 15, 29, 0.72);
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(11, 15, 29, 0.68);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
@@ -61,6 +112,8 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
+      position: relative;
+      z-index: 2;
     }
 
     .brand {
@@ -75,6 +128,7 @@
       width: 42px;
       height: 42px;
       object-fit: contain;
+      filter: drop-shadow(0 0 14px rgba(167, 139, 250, 0.30));
     }
 
     .nav {
@@ -85,29 +139,237 @@
       font-size: 15px;
     }
 
+    .nav a {
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.22s ease;
+      border-radius: 999px;
+    }
+
     .nav a:hover {
       color: var(--text);
     }
 
+    .nav a:hover::after {
+      transform: scaleX(1);
+    }
+
     .hero {
-      min-height: 84vh;
+      min-height: 88vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 96px 24px 72px;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-inner {
-      max-width: 880px;
+      max-width: 920px;
       text-align: center;
+      position: relative;
+    }
+
+    .hero-constellation {
+      position: relative;
+      width: min(660px, 92vw);
+      height: min(470px, 72vw);
+      max-height: 500px;
+      margin: 0 auto 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-logo-wrap {
+      position: relative;
+      display: inline-block;
+      z-index: 3;
+    }
+
+    .hero-logo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 290px;
+      height: 290px;
+      transform: translate(-50%, -50%);
+      background:
+        radial-gradient(
+          circle,
+          rgba(167, 139, 250, 0.38),
+          rgba(167, 139, 250, 0.12),
+          transparent 70%
+        );
+      filter: blur(20px);
+      border-radius: 999px;
+      animation: pulseGlow 4.6s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    .hero-logo-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 390px;
+      height: 390px;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      box-shadow:
+        0 0 60px rgba(167, 139, 250, 0.08),
+        inset 0 0 40px rgba(167, 139, 250, 0.04);
+      z-index: -1;
+      animation: orbitRing 18s linear infinite;
     }
 
     .hero-logo {
-      width: min(360px, 82vw);
+      position: relative;
+      z-index: 1;
+      width: min(300px, 54vw);
       height: auto;
       display: block;
-      margin: 0 auto 40px;
-      filter: drop-shadow(0 24px 60px rgba(167, 139, 250, 0.26));
+      margin: 0 auto;
+      filter:
+        drop-shadow(0 24px 60px rgba(167, 139, 250, 0.30))
+        drop-shadow(0 0 20px rgba(125, 211, 252, 0.14));
+      animation: logoFloat 5.5s ease-in-out infinite;
+    }
+
+    .value-bubble {
+      position: absolute;
+      z-index: 2;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.04));
+      color: #e9e5ff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 12px 34px rgba(0, 0, 0, 0.20),
+        0 0 24px rgba(167, 139, 250, 0.10);
+      animation: bubbleFloat 6s ease-in-out infinite;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .value-bubble::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.34), rgba(125, 211, 252, 0.16));
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.2s ease;
+    }
+
+    .value-bubble:hover::before {
+      opacity: 1;
+    }
+
+    .value-bubble:hover {
+      border-color: rgba(167, 139, 250, 0.32);
+      box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.22),
+        0 0 34px rgba(167, 139, 250, 0.18);
+    }
+
+    .bubble-1 {
+      top: 12%;
+      left: 7%;
+      animation-delay: -0.5s;
+    }
+
+    .bubble-2 {
+      top: 8%;
+      right: 8%;
+      animation-delay: -1.8s;
+    }
+
+    .bubble-3 {
+      top: 48%;
+      left: 0;
+      animation-delay: -3s;
+    }
+
+    .bubble-4 {
+      top: 48%;
+      right: 0;
+      animation-delay: -2.4s;
+    }
+
+    .bubble-5 {
+      bottom: 10%;
+      left: 12%;
+      animation-delay: -4.2s;
+    }
+
+    .bubble-6 {
+      bottom: 12%;
+      right: 10%;
+      animation-delay: -3.5s;
+    }
+
+    @keyframes bubbleFloat {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+      }
+
+      50% {
+        transform: translateY(-10px) translateX(4px);
+      }
+    }
+
+    @keyframes orbitRing {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(0.96);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.08);
+      }
+    }
+
+    @keyframes logoFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
     .eyebrow {
@@ -120,6 +382,7 @@
       color: #d9ceff;
       font-size: 14px;
       letter-spacing: 0.4px;
+      box-shadow: 0 0 18px rgba(167, 139, 250, 0.08);
     }
 
     h1 {
@@ -154,7 +417,11 @@
       border-radius: 999px;
       font-weight: 700;
       border: 1px solid transparent;
-      transition: transform 0.16s ease, background 0.16s ease, border 0.16s ease;
+      transition:
+        transform 0.18s ease,
+        background 0.18s ease,
+        border 0.18s ease,
+        box-shadow 0.18s ease;
     }
 
     .button:hover {
@@ -162,8 +429,13 @@
     }
 
     .button-primary {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), #c4b5fd);
       color: #120d24;
+      box-shadow: 0 10px 30px rgba(167, 139, 250, 0.22);
+    }
+
+    .button-primary:hover {
+      box-shadow: 0 16px 34px rgba(167, 139, 250, 0.34);
     }
 
     .button-secondary {
@@ -172,8 +444,15 @@
       background: rgba(255, 255, 255, 0.04);
     }
 
+    .button-secondary:hover {
+      border-color: rgba(167, 139, 250, 0.34);
+      box-shadow: 0 10px 24px rgba(167, 139, 250, 0.12);
+    }
+
     section {
       padding: 84px 24px;
+      position: relative;
+      z-index: 1;
     }
 
     .section-inner {
@@ -208,6 +487,17 @@
       border: 1px solid var(--card-border);
       border-radius: 28px;
       background: var(--card);
+      backdrop-filter: blur(10px);
+      transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(167, 139, 250, 0.26);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.20);
     }
 
     .card h3 {
@@ -238,6 +528,17 @@
       grid-template-columns: 1.4fr 0.6fr;
       gap: 28px;
       align-items: center;
+      backdrop-filter: blur(10px);
+      transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(167, 139, 250, 0.26);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
     }
 
     .game-card h3 {
@@ -267,6 +568,7 @@
       color: var(--text-muted);
       font-weight: 700;
       white-space: nowrap;
+      box-shadow: inset 0 0 18px rgba(167, 139, 250, 0.04);
     }
 
     .contact-box {
@@ -275,6 +577,15 @@
       border: 1px solid var(--card-border);
       border-radius: 32px;
       background: var(--card);
+      backdrop-filter: blur(10px);
+      transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .contact-box:hover {
+      border-color: rgba(167, 139, 250, 0.26);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.20);
     }
 
     .contact-box p {
@@ -287,12 +598,15 @@
       font-size: clamp(22px, 3vw, 32px);
       font-weight: 700;
       color: var(--text);
+      word-break: break-word;
     }
 
     .site-footer {
       padding: 34px 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--text-muted);
+      position: relative;
+      z-index: 1;
     }
 
     .footer-inner {
@@ -316,6 +630,19 @@
       color: var(--text);
     }
 
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @media (max-width: 760px) {
       .header-inner {
         flex-direction: column;
@@ -334,6 +661,63 @@
         padding-top: 72px;
       }
 
+      .hero-constellation {
+        width: 100%;
+        height: 520px;
+        margin-bottom: 24px;
+      }
+
+      .hero-logo {
+        width: min(240px, 62vw);
+      }
+
+      .hero-logo-wrap::before {
+        width: 240px;
+        height: 240px;
+      }
+
+      .hero-logo-wrap::after {
+        width: 300px;
+        height: 300px;
+      }
+
+      .value-bubble {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+
+      .bubble-1 {
+        top: 4%;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .bubble-2 {
+        top: 18%;
+        right: 4%;
+      }
+
+      .bubble-3 {
+        top: 42%;
+        left: 0;
+      }
+
+      .bubble-4 {
+        top: 42%;
+        right: 0;
+      }
+
+      .bubble-5 {
+        bottom: 18%;
+        left: 4%;
+      }
+
+      .bubble-6 {
+        bottom: 4%;
+        right: 50%;
+        transform: translateX(50%);
+      }
+
       .cards {
         grid-template-columns: 1fr;
       }
@@ -345,11 +729,38 @@
       .status-badge {
         justify-self: start;
       }
+
+      .orb-3 {
+        left: 10%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="#start" aria-label="Game Shelter home">
@@ -367,8 +778,19 @@
 
   <main>
     <section class="hero" id="start">
-      <div class="hero-inner">
-        <img class="hero-logo" src="logo.png" alt="Game Shelter logo" />
+      <div class="hero-inner reveal">
+        <div class="hero-constellation" aria-label="Game Shelter values">
+          <div class="hero-logo-wrap">
+            <img class="hero-logo" src="logo.png" alt="Game Shelter logo" />
+          </div>
+
+          <div class="value-bubble bubble-1">Emotional stories</div>
+          <div class="value-bubble bubble-2">Cozy worlds</div>
+          <div class="value-bubble bubble-3">Relaxing puzzles</div>
+          <div class="value-bubble bubble-4">Beautiful details</div>
+          <div class="value-bubble bubble-5">Accessible play</div>
+          <div class="value-bubble bubble-6">Curious to explore?</div>
+        </div>
 
         <div class="eyebrow">Independent Game Studio</div>
 
@@ -387,7 +809,7 @@
     </section>
 
     <section id="about">
-      <div class="section-inner">
+      <div class="section-inner reveal">
         <h2 class="section-title">About Game Shelter</h2>
 
         <p class="section-text">
@@ -424,7 +846,7 @@
     </section>
 
     <section id="games">
-      <div class="section-inner">
+      <div class="section-inner reveal">
         <h2 class="section-title">Games</h2>
 
         <p class="section-text">
@@ -450,7 +872,7 @@
     </section>
 
     <section id="contact">
-      <div class="section-inner">
+      <div class="section-inner reveal">
         <h2 class="section-title">Contact</h2>
 
         <p class="section-text">
@@ -460,8 +882,8 @@
 
         <div class="contact-box">
           <p>Email</p>
-          <a class="contact-email" href="mailto:hello@gameshelter.games">
-            hello@gameshelter.games
+          <a class="contact-email" href="mailto:gamesheltergames@gmail.com">
+            gamesheltergames@gmail.com
           </a>
         </div>
       </div>
@@ -478,5 +900,21 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.16
+    });
+
+    revealElements.forEach((el) => observer.observe(el));
+  </script>
 </body>
 </html>
